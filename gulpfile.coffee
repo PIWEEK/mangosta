@@ -33,12 +33,12 @@ paths = {
 # HTML Related tasks
 ##############################################################################
 
-gulp.task "templates", ->
+gulp.task "jade", ->
     gulp.src(paths.jade)
     .pipe(plumber())
     .pipe(jade({pretty: true}))
     .pipe(gulp.dest(paths.dist))
-    .pipe(size())
+    .pipe(connect.reload())
 
 ##############################################################################
 # CSS Related tasks
@@ -54,10 +54,11 @@ gulp.task "sass", ->
     gulp.src(paths.scssMain)
     .pipe(plumber())
     .pipe(sass())
-    .pipe(gulp.dest(paths.scssMainDist))
+    .pipe(gulp.dest(paths.scssMainDist + '/styles.css'))
+    .pipe(connect.reload())
 
 gulp.task "csslint", ->
-    gulp.src(paths.scssMainDist)
+    gulp.src(paths.scssMainDist + '/styles.css')
     .pipe(csslint("csslintrc.json"))
     .pipe(csslint.reporter())
 
@@ -70,14 +71,23 @@ gulp.task "watch", ->
     gulp.watch(paths.jade, ["jade"])
     gulp.watch(paths.scss, ["scsslint", "sass", "csslint"])
 
+gulp.task('connect', ->
+    connect.server({
+        root: paths.dist,
+        port: 8080,
+        livereload: true
+    });
+);
+
 ##############################################################################
 # manage Tasks
 ##############################################################################
 
 gulp.task "default", [
-    "templates",
+    "jade",
     "scsslint",
     "sass",
     "csslint",
+    "connect",
     "watch"
 ]

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "coffee-script": "^1.7.1",
+    "express": "^4.6.1",
     "gulp-connect": "^2.0.6",
     "gulp-csslint": "^0.1.4",
     "gulp-filesize": "0.0.6",
