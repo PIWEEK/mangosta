@@ -63,6 +63,15 @@ gulp.task "csslint", ->
     .pipe(csslint.reporter())
 
 ##############################################################################
+# Bullshit related tasks
+##############################################################################
+
+# Copy Files
+gulp.task "copy",  ->
+    gulp.src("#{paths.app}/vendor/**/*")
+        .pipe(gulp.dest("#{paths.dist}/vendor/"))
+
+##############################################################################
 # Server Related tasks
 ##############################################################################
 
@@ -88,6 +97,7 @@ gulp.task "default", [
     "scsslint",
     "sass",
     "csslint",
+    "copy",
     "connect",
     "watch"
 ]

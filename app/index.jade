@@ -1,2 +1,24 @@
-//- Index File
-div.hello Hello You
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        title Mangosta
+        meta(http-equiv="content-type", content="text/html; charset=utf-8")
+        meta(name="description", content="Proyecto de investigación de arquitectura front aplicada a web components")
+        meta(name="keywords", content="Web Components, Piweek, Polymer, mangosta")
+        meta(name="viewport", content="width=device-width, user-scalable=no")
+        script(src="/vendor/platform/platform.js")
+        link(rel="import" href="/vendor/core-ajax/core-ajax.html")
+
+    body
+        core-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "year":"1990","vote_average.gte":"8","vote_count.gte":"10"}')
+        div Hola Mundo
+
+        script(type='text/javascript').
+            window.addEventListener('polymer-ready', function(e) {
+                var ajax = document.querySelector('core-ajax');
+                ajax.addEventListener('core-response', function(e) {
+                    console.log(this.response);
+                });
+                ajax.go();
+            });
