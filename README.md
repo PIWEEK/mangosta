@@ -1,7 +1,7 @@
 # Mangosta
 ![Kaleidos Project](http://kaleidos.net/static/img/badge.png "Kaleidos Project")
 ### Proyecto de investigación de arquitectura front aplicada a web components
-![Mangosta](http://i.imgur.com/2uS87H8.png "Mangosta")
+![Mangosta](http://i.imgur.com/qaQAEtm.png "Mangosta")
 
 ## Setup initial environment
 
