@@ -1,0 +1,15 @@
+:host {
+    background: #000;
+    cursor: pointer;
+    padding: 1rem 0;
+    transition: background 1s linear;
+}
+
+:host(:hover) {
+    background: #666;
+}
+
+:host > span {
+    color: #0ff;
+    display: block;
+}

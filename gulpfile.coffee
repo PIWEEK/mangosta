@@ -27,7 +27,7 @@ paths = {
     #################
     scss: "app/**/*.scss",
     scssMain: "app/styles/main.scss",
-    scssMainDist: "dist/styles/"
+    cssDistFold: "dist/styles/"
     cssMainDist: "dist/styles/main.css"
     #################
     elementStyles: "app/styles/elements/**/*.scss"
@@ -57,18 +57,18 @@ gulp.task "scsslint", ->
     ))
 
 gulp.task "sass", ["scsslint"], ->
-    gulp.src(paths.scss)
+    gulp.src([paths.scss, '!' + paths.elementStyles])
     .pipe(plumber())
     .pipe(sass())
     .pipe(gulp.dest(paths.dist))
     .pipe(connect.reload())
 
-gulp.task "elementStyles", ["scsslint"], ->
+gulp.task "elementStyles", ["scsslint", "sass"], ->
     gulp.src(paths.elementStyles)
     .pipe(plumber())
     .pipe(cache("elementStyles"))
     .pipe(sass())
-    .pipe(gulp.dest(paths.scssMainDist))
+    .pipe(gulp.dest(paths.cssDistFold))
     .pipe(connect.reload())
 
 gulp.task "csslint", ["sass", "elementStyles"], ->

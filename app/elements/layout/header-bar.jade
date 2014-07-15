@@ -1,7 +1,20 @@
 link(rel="import", href="../../vendor/polymer/polymer.html")
+link(rel="import", href="../../vendor/core-ajax/core-ajax.html")
+link(rel="import", href="../buttons/tab.html")
 
-polymer-element(name="header-bar", noscript)
+polymer-element(name="mg-header-bar")
     template
+        core-ajax(auto, url="https://api.themoviedb.org/3/genre/movie/list", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "language": "es"}', on-core-response="{{genresList}}")
         link(rel="stylesheet" href="../../styles/layout/header-bar.css")
-        div#header-bar
-            div This is a <b>Header bar</b>
+        content(select="h1")
+        template(repeat="{{genre in genres}}")
+            mg-tab(flex)
+                span {{genre.name}}
+
+    script.
+        Polymer({
+            genresList: function(event, response) {
+                this.genres = response.response.genres;
+                console.log(this.genres);
+            }
+        });

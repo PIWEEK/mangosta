@@ -7,10 +7,13 @@ html(lang="en")
         meta(name="description", content="Proyecto de investigación de arquitectura front aplicada a web components")
         meta(name="keywords", content="Web Components, Piweek, Polymer, mangosta")
         meta(name="viewport", content="width=device-width, user-scalable=no")
-        link(rel="stylesheet", href="/vendor/normalize.css/normalize.css")
         script(src="/vendor/platform/platform.js")
+        link(rel="stylesheet", href="vendor/normalize.css/normalize.css")
+        link(rel="stylesheet", href="styles/main.css")
         link(rel="import" href="/elements/layout/header-bar.html")
 
-    body
-        header-bar(flex)
+    body(fullbleed vertical layout unresolved)
+        mg-header-bar(horizontal layout)
+        div.wrapper
+            h1 title
 

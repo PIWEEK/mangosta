@@ -1,0 +1,13 @@
+link(rel="import", href="../../vendor/polymer/polymer.html")
+
+polymer-element(name="mg-tab")
+    template
+        link(rel="stylesheet" href="../../styles/buttons/tab.css")
+        content(select="span")
+
+    script.
+        Polymer('mg-tab', {
+            ready: function() {
+                console.log('tabs-ready');
+            }
+        });
