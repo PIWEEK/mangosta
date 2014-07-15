@@ -4,6 +4,7 @@ gulp = require('gulp')
 plumber = require("gulp-plumber")
 size = require("gulp-filesize")
 watch = require("gulp-watch")
+cache = require("gulp-cached")
 
 # HTML
 jade = require("gulp-jade")
@@ -25,8 +26,11 @@ paths = {
     jade: "app/**/*.jade",
     #################
     scss: "app/**/*.scss",
-    scssMain: "app/styles/styles.scss",
-    scssMainDist: "dist/styles"
+    scssMain: "app/styles/main.scss",
+    scssMainDist: "dist/styles/"
+    cssMainDist: "dist/styles/main.css"
+    #################
+    elementStyles: "app/styles/elements/**/*.scss"
 }
 
 ##############################################################################
@@ -36,6 +40,7 @@ paths = {
 gulp.task "jade", ->
     gulp.src(paths.jade)
     .pipe(plumber())
+    .pipe(cache("jade"))
     .pipe(jade({pretty: true}))
     .pipe(gulp.dest(paths.dist))
     .pipe(connect.reload())
@@ -45,22 +50,32 @@ gulp.task "jade", ->
 ##############################################################################
 
 gulp.task "scsslint", ->
-    gulp.src([paths.scssMain, '!app/vendor/bourbon/**/*.scss'])
+    gulp.src([paths.scssMain, paths.elementStyles])
+    .pipe(cache("scsslint"))
     .pipe(scsslint(
         {'config': 'scsslint.yml'}
     ))
 
-gulp.task "sass", ->
-    gulp.src(paths.scssMain)
+gulp.task "sass", ["scsslint"], ->
+    gulp.src(paths.scss)
     .pipe(plumber())
     .pipe(sass())
-    .pipe(gulp.dest(paths.scssMainDist + '/styles.css'))
+    .pipe(gulp.dest(paths.dist))
     .pipe(connect.reload())
 
-gulp.task "csslint", ->
-    gulp.src(paths.scssMainDist + '/styles.css')
+gulp.task "elementStyles", ["scsslint"], ->
+    gulp.src(paths.elementStyles)
+    .pipe(plumber())
+    .pipe(cache("elementStyles"))
+    .pipe(sass())
+    .pipe(gulp.dest(paths.scssMainDist))
+    .pipe(connect.reload())
+
+gulp.task "csslint", ["sass", "elementStyles"], ->
+    gulp.src(paths.cssMainDist)
+    .pipe(plumber())
+    .pipe(cache("csslint"))
     .pipe(csslint("csslintrc.json"))
-    .pipe(csslint.reporter())
 
 ##############################################################################
 # Bullshit related tasks
@@ -78,7 +93,7 @@ gulp.task "copy",  ->
 # Rerun the task when a file changes
 gulp.task "watch", ->
     gulp.watch(paths.jade, ["jade"])
-    gulp.watch(paths.scss, ["scsslint", "sass", "csslint"])
+    gulp.watch(paths.scss, ["scsslint", "sass", "elementStyles", "csslint"])
 
 gulp.task('connect', ->
     connect.server({
@@ -96,6 +111,7 @@ gulp.task "default", [
     "jade",
     "scsslint",
     "sass",
+    "elementStyles",
     "csslint",
     "copy",
     "connect",

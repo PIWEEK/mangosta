@@ -1,0 +1,76 @@
+//@each $font-face in DroidSans, DroidSans-Bold, ostrichSans, OpenSans-CondLight-webfont, taiga {
+//    @font-face {
+//        font-family: '#{$font-face}';
+//        src: url('../fonts/#{$font-face}.eot?#iefix') format('embedded-opentype'),
+//        url('../fonts/#{$font-face}.woff') format('woff'),
+//        url('../fonts/#{$font-face}.ttf')  format('truetype'),
+//        url('../fonts/#{$font-face}.svg#{$font-face}') format('svg');
+//    }
+//}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $blackish;
+    font-weight: normal;
+    a {
+        font-weight: inherit;
+    }
+}
+
+// __Font Sizes__ //
+%xsmall {font-size: .5rem;}
+%small {font-size: .8rem;}
+%medium {font-size: 1rem;}
+%large {font-size: 1.2rem;}
+%larger {font-size: 1.6rem;}
+%xlarge {font-size: 2rem;}
+%xxlarge {font-size: 3rem;}
+
+// __Font Types__ //
+//%title {font-family: 'OpenSans-CondLight-webfont';}
+//%text {font-family: 'DroidSans';}
+//%bold {font-family: 'DroidSans-Bold';}
+//%taiga {font-family: 'taiga';}
+
+h1 {
+    @extend %xxlarge;
+    line-height: 2.7rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    @extend %xlarge;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin: 0 0 20px;
+    img {
+        margin: 0;
+    }
+  }
+
+em { font-style: italic; }
+strong {
+    font-weight: bold;
+}
+
+hr {
+    border: solid #ddd;
+    border-width: 1px 0 0;
+    clear: both;
+    height: 0;
+    margin: 10px 0 30px;
+}
+
+// __Links__
+
+a,
+a:visited {
+    color: #333;
+    text-decoration: none;
+}
