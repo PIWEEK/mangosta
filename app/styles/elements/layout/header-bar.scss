@@ -20,6 +20,7 @@
 
 :host::shadow mg-tab {
     background: #000;
+    border-bottom: 1px solid #000;
     transition: background .5s linear;
     &:hover {
         background: #333;

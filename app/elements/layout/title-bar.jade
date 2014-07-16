@@ -7,11 +7,6 @@ polymer-element(name="mg-title-bar")
         mg-hamburguer
 
     script.
-        var element = document.querySelector('mg-header-bar');
-        console.log(element);
-        element.addEventListener('genres-menu', function(e) {
-            console.log('Listened!');
-        });
         Polymer('mg-title-bar', {
             ready: function() {
                 console.log('mg-title-bar-ready');

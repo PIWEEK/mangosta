@@ -17,12 +17,13 @@ html(lang="en")
 
         link(rel="import" href="/elements/layout/header-bar.html")
         link(rel="import" href="/elements/layout/title-bar.html")
+        link(rel="import" href="/elements/layout/main.html")
 
     body(fullbleed unresolved)
         div.container(horizontal layout)
             mg-header-bar.closed(vertical layout self-center)
             mg-title-bar
-            div.main(flex self-stretch) Main
+            mg-main(flex)
 
         script.
             window.addEventListener('genres-menu', function(e) {
@@ -31,7 +32,7 @@ html(lang="en")
                 element.classList.toggle('open');
                 element.classList.toggle('closed');
                 setTimeout(function(){
-                    element.classList.toggle('closed');
                     element.classList.toggle('open');
+                    element.classList.toggle('closed');
                 }, 4000);
             });
