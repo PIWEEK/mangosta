@@ -1,27 +1,38 @@
 :host {
     background: #000;
     display: block;
-    transform: translateY(-100%);
-    -webkit-transform: translateY(-100%);
+    -webkit-transform: translate3d(-170px, 0, 0);
+    transform: translate3d(-170px, 0, 0);
+    z-index: 99;
 }
 
-:host /deep/ mg-tab {
+:host(.open) {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    transition: all .5s linear;
+}
+
+:host(.closed) {
+    -webkit-transform: translate3d(-170px, 0, 0);
+    transform: translate3d(-170px, 0, 0);
+    transition: all .1s linear;
+}
+
+:host::shadow mg-tab {
     background: #000;
     min-width: 20%;
     transition: background .5s linear;
+    &:hover {
+        background: #333;
+        span {
+            color: #ffa500;
+        }
+    }
+    span {
+        color: #666;
+        display: block;
+        text-align: center;
+        transition: color .5s linear;
+    }
 }
 
-:host /deep/ mg-tab:hover {
-    background: #333;
-}
-
-:host /deep/ mg-tab > span {
-    color: #666;
-    display: block;
-    text-align: center;
-    transition: color .5s linear;
-}
-
-:host /deep/ mg-tab:hover > span {
-    color: #ffa500;
-}

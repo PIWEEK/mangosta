@@ -1,13 +1,17 @@
 link(rel="import", href="../../vendor/polymer/polymer.html")
+link(rel="import", href="../buttons/hamburguer.html")
 
 polymer-element(name="mg-title-bar")
     template
         link(rel="stylesheet" href="../../styles/layout/title-bar.css")
-        link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
-        i.fa.fa-bars.fa-2x
-        h1(flex) Title
+        mg-hamburguer
 
     script.
+        var element = document.querySelector('mg-header-bar');
+        console.log(element);
+        element.addEventListener('genres-menu', function(e) {
+            console.log('Listened!');
+        });
         Polymer('mg-title-bar', {
             ready: function() {
                 console.log('mg-title-bar-ready');

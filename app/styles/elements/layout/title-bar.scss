@@ -1,20 +1,6 @@
 :host {
     background: #222;
     padding: 1rem;
-}
-
-:host > i {
-    color: #666;
-    cursor: pointer;
-    margin: 0 3rem;
-    transition: color .3s linear;
-}
-
-:host > i:hover {
-    color: #ffa500;
-}
-
-:host > h1 {
-    color: rgba(#fff, 1);
-    margin: 0;
+    -webkit-transform: translate3d(-170px, 0, 0);
+    transform: translate3d(-170px, 0, 0);
 }

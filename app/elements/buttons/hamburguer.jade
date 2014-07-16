@@ -1,0 +1,18 @@
+link(rel="import", href="../../vendor/polymer/polymer.html")
+
+polymer-element(name="mg-hamburguer")
+    template
+        link(rel="stylesheet" href="../../styles/buttons/hamburguer.css")
+        link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
+        i.fa.fa-bars.fa-2x
+
+    script.
+        Polymer({
+            ready: function() {
+               this.addEventListener('click', this.genresMenu);
+            },
+            genresMenu: function() {
+                this.fire('genres-menu');
+                console.log('Fire!');
+            }
+        });
