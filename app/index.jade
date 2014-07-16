@@ -20,9 +20,9 @@ html(lang="en")
 
     body(fullbleed unresolved)
         div.container(horizontal layout)
-            mg-header-bar.closed
+            mg-header-bar.closed(vertical layout self-center)
             mg-title-bar
-            div.main(flex ten) Main
+            div.main(flex self-stretch) Main
 
         script.
             window.addEventListener('genres-menu', function(e) {

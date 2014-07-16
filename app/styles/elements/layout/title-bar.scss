@@ -1,6 +1,8 @@
 :host {
     background: #222;
+    height: 100%;
     padding: 1rem;
+    position: fixed;
     -webkit-transform: translate3d(-170px, 0, 0);
     transform: translate3d(-170px, 0, 0);
 }
