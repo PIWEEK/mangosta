@@ -43,6 +43,7 @@
         transition: all .3s ease-in;
         width: 100%;
         -webkit-transform: translateY(100%);
+        transform: translateY(100%);
     }
     h1 {
         font-size: 1.4rem;
@@ -61,5 +62,17 @@
         right: .2rem;
         top: .2rem;
         text-shadow: 2px 2px 10px #000;
+    }
+}
+
+:host::shadow mg-movie-lb {
+    &.closed{
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+        transition: all 1s ease-in;
+    }
+    &.open {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
 }

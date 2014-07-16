@@ -1,6 +1,6 @@
 link(rel="import", href="../../vendor/polymer/polymer.html")
 
-polymer-element(name="mg-hamburguer")
+polymer-element(name="mg-hamburguer", on-click="{{genresMenu}}")
     template
         link(rel="stylesheet" href="../../styles/buttons/hamburguer.css")
         link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
@@ -8,9 +8,6 @@ polymer-element(name="mg-hamburguer")
 
     script.
         Polymer({
-            ready: function() {
-               this.addEventListener('click', this.genresMenu);
-            },
             genresMenu: function() {
                 this.fire('genres-menu');
                 console.log('Fire!');

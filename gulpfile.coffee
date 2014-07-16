@@ -71,7 +71,7 @@ gulp.task "elementStyles", ["scsslint", "sass"], ->
     .pipe(gulp.dest(paths.cssDistFold))
     .pipe(connect.reload())
 
-gulp.task "csslint", ["sass", "elementStyles"], ->
+gulp.task "csslint", ->
     gulp.src(paths.cssMainDist)
     .pipe(plumber())
     .pipe(cache("csslint"))

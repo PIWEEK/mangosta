@@ -1,0 +1,18 @@
+link(rel="import", href="../../vendor/polymer/polymer.html")
+
+polymer-element(name="mg-movie-lb", attributes="movieDeep")
+    template
+        link(rel="stylesheet" href="../../styles/modules/movie-lightbox.css")
+        div.movie-lb-container
+            h1 {{movieDeep.title}}
+                span {{movieDeep.original_title}}
+            p {{movieDeep.overview}}
+        figure
+            img(src="https://image.tmdb.org/t/p/w500/{{movieDeep.poster_path}}" alt="{{movieDeep.title}}")
+
+    script.
+        Polymer('mg-movie-lb', {
+            ready: function() {
+                console.log('mg-movie-lb-ready');
+            }
+        });
