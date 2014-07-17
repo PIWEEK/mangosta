@@ -1,4 +1,5 @@
 :host {
+    margin: 0 2rem;
     > h1 {
         color: #ffa500;
         font-family: 'Gloria Hallelujah', cursive;
@@ -30,7 +31,8 @@
     }
     img {
         width: 100%;
-        min-height:200px;
+        min-height: 200px;
+        min-width: 200px;
     }
     .single-movie-container {
         background: rgba(#fff, .4);

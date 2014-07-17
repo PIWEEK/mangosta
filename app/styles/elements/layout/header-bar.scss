@@ -3,6 +3,7 @@
     display: block;
     -webkit-transform: translate3d(-170px, 0, 0);
     transform: translate3d(-170px, 0, 0);
+    width: 170px;
     z-index: 99;
 }
 
@@ -21,14 +22,18 @@
 :host::shadow mg-tab {
     background: #000;
     border-bottom: 1px solid #000;
+    display: block;
     transition: background .5s linear;
+
     &:hover {
         background: #333;
-        span {
+        span,
+        div {
             color: #ffa500;
         }
     }
-    span {
+    span,
+    div {
         color: #666;
         display: block;
         text-align: center;

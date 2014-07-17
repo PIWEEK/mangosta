@@ -7,8 +7,7 @@ polymer-element(name="mg-header-bar"  unresolved)
         core-ajax(auto, url="https://api.themoviedb.org/3/genre/movie/list", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "language": "es"}', on-core-response="{{genresList}}")
         link(rel="stylesheet" href="../../styles/layout/header-bar.css")
         template(repeat="{{genre in genres}}")
-            mg-tab
-                span {{genre.name}}
+            mg-tab(flex, genreName="{{genre.name}}")
 
     script.
         Polymer({

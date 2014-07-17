@@ -21,18 +21,22 @@ html(lang="en")
 
     body(fullbleed unresolved)
         div.container(horizontal layout)
-            mg-header-bar.closed(vertical layout self-center)
+            mg-header-bar.closed(vertical layout)
             mg-title-bar
             mg-main(flex)
 
         script.
             window.addEventListener('genres-menu', function(e) {
                 var element = document.querySelector('mg-header-bar');
-                console.log('Listened!');
+                var parent = document.querySelector('mg-title-bar');
                 element.classList.toggle('open');
                 element.classList.toggle('closed');
+                parent.classList.toggle('open');
+                parent.classList.toggle('closed');
                 setTimeout(function(){
-                    element.classList.toggle('open');
-                    element.classList.toggle('closed');
+                    element.classList.remove('open');
+                    element.classList.add('closed');
+                    parent.classList.remove('open');
+                    parent.classList.add('closed');
                 }, 4000);
             });
