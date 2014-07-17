@@ -6,10 +6,11 @@ link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='style
 
 polymer-element(name="mg-main" attributes="movies genreId")
     template
-        core-ajax#genres-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-all(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax(auto, url="https://api.themoviedb.org/3/movie/{{movieId}}", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270"}', on-core-response="{{showMovie}}")
         link(rel="stylesheet" href="../../styles/layout/main.css")
-        h1 ΠWEEK Movie Finder
+        h1 Mangosta Movie Finder
         div(horizontal layout)
             div.movie-container(horizontal layout wrap style="width: 100%")
                 template(repeat="{{movie in movies}}")
@@ -25,9 +26,15 @@ polymer-element(name="mg-main" attributes="movies genreId")
     script.
         Polymer({
             ready: function() {
+                var ajax = this.shadowRoot.getElementById('genres-all');
+                ajax.go();
             },
             discover: function(event, response) {
-                this.movies = response.response.results;
+                if(response.response.results.length > 0){
+                    this.movies = response.response.results;
+                }else{
+                    alert('No hay películas con este filtrado');
+                }
             },
             movieData: function(event) {
                 this.movieId = event.currentTarget.id;
@@ -38,7 +45,6 @@ polymer-element(name="mg-main" attributes="movies genreId")
                 this.singleMovieData = response.response;
             },
             genreSignal: function() {
-                console.log(this.genreId);
                 var ajax = this.shadowRoot.getElementById('genres-ajax');
                 ajax.go();
             }
