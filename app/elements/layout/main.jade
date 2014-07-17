@@ -3,14 +3,33 @@ link(rel="import", href="../modules/single-movie.html")
 link(rel="import", href="../modules/movie-lightbox.html")
 link(rel="import", href="../../vendor/core-ajax/core-ajax.html")
 link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='stylesheet', type='text/css')
+link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='stylesheet', type='text/css')
 
 polymer-element(name="mg-main" attributes="movies genreId")
     template
-        core-ajax#genres-all(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
-        core-ajax#genres-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-all(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "5", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "{{votes}}", "vote_count.gte": 20, "sort_by": "popularity.asc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#votes-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "{{votes}}", "vote_count.gte": 30, "sort_by": "vote_average.asc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#year-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "release_date.gte": "{{year}}", "release_date.lte": "{{decade}}", "vote_average.gte": "7", "vote_count.gte": 20, "sort_by": "vote_average.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax(auto, url="https://api.themoviedb.org/3/movie/{{movieId}}", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270"}', on-core-response="{{showMovie}}")
         link(rel="stylesheet" href="../../styles/layout/main.css")
         h1 Mangosta Movie Finder
+        div.filters
+            fieldset
+                label Votes
+                input(type="range", name="points", value="8" min="1", max="10", on-change="{{changeVotes}}")
+            fieldset
+                select#year-selector(name="points", on-change="{{changeYear}}")
+                    option(value="1900-01-01", data="1930-12-12") 1900
+                    option(value="1930-01-01", data="1940-12-12") 1930
+                    option(value="1940-01-01", data="1950-12-12") 1940
+                    option(value="1950-01-01", data="1960-12-12") 1950
+                    option(value="1960-01-01", data="1970-12-12") 1960
+                    option(value="1970-01-01", data="1980-12-12") 1970
+                    option(value="1980-01-01", data="1990-12-12") 1980
+                    option(value="1990-01-01", data="2000-12-12") 1990
+                    option(value="2000-01-01", data="2010-12-12") 2000
+                    option(value="2010-01-01", data="2019-12-12", selected) 2010
         div(horizontal layout)
             div.movie-container(horizontal layout wrap style="width: 100%")
                 template(repeat="{{movie in movies}}")
@@ -46,6 +65,19 @@ polymer-element(name="mg-main" attributes="movies genreId")
             },
             genreSignal: function() {
                 var ajax = this.shadowRoot.getElementById('genres-ajax');
+                ajax.go();
+            },
+            changeVotes: function(event) {
+                this.votes = event.currentTarget.value;
+                console.log(this.votes);
+                var ajax = this.shadowRoot.getElementById('votes-ajax');
+                ajax.go();
+            },
+            changeYear: function(event) {
+                this.year = event.currentTarget.value;
+                var selected = this.shadowRoot.getElementById("year-selector");
+                this.decade = selected.options[selected.selectedIndex].getAttribute('data');
+                var ajax = this.shadowRoot.getElementById('year-ajax');
                 ajax.go();
             }
         });

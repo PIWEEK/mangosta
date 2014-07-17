@@ -5,6 +5,7 @@
         font-family: 'Gloria Hallelujah', cursive;
     }
 }
+
 :host::shadow mg-single-movie {
     box-sizing: border-box;
     display: inline-block;
@@ -77,5 +78,35 @@
         -webkit-transform: translateY(0);
         transform: translateY(0);
         transition: all 1s ease-in;
+    }
+}
+
+:host::shadow  {
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        width: 100%;
+    }
+    label{
+        position: absolute;
+        bottom: 5px;
+        left: 15px;
+        color: #ffa500;
+    }
+    input[type=range] {
+        -webkit-appearance: none;
+        background-color: #222;
+        width: 20%;
+        height:20px;
+        margin-left: 70px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background-color: #666;
+        width: 10px;
+        height: 24px;
     }
 }
