@@ -4,9 +4,9 @@ link(rel="import", href="../modules/movie-lightbox.html")
 link(rel="import", href="../../vendor/core-ajax/core-ajax.html")
 link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='stylesheet', type='text/css')
 
-polymer-element(name="mg-main" attributes="movies")
+polymer-element(name="mg-main" attributes="movies genreId")
     template
-        core-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax(auto, url="https://api.themoviedb.org/3/movie/{{movieId}}", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270"}', on-core-response="{{showMovie}}")
         link(rel="stylesheet" href="../../styles/layout/main.css")
         h1 ΠWEEK Movie Finder
@@ -24,6 +24,8 @@ polymer-element(name="mg-main" attributes="movies")
 
     script.
         Polymer({
+            ready: function() {
+            },
             discover: function(event, response) {
                 this.movies = response.response.results;
             },
@@ -34,6 +36,10 @@ polymer-element(name="mg-main" attributes="movies")
             },
             showMovie: function(event, response) {
                 this.singleMovieData = response.response;
-                console.log(response);
+            },
+            genreSignal: function() {
+                console.log(this.genreId);
+                var ajax = this.shadowRoot.getElementById('genres-ajax');
+                ajax.go();
             }
         });
