@@ -13,7 +13,7 @@ polymer-element(name="mg-movie-lb", attributes="movieDeep")
                     li Vote Count <strong>{{movieDeep.vote_count}}</strong>
                     li Average vote <strong>{{movieDeep.vote_average}}</strong>
             figure
-                img(src="https://image.tmdb.org/t/p/w500/{{movieDeep.poster_path}}" alt="{{movieDeep.title}}")
+                img(src="https://image.tmdb.org/t/p/w500/{{movieDeep.poster_path}}" alt="{{movieDeep.title}}", unresolved)
             i.fa.fa-times.fa-2x(on-click="{{toggle}}")
 
 
