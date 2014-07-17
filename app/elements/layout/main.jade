@@ -6,12 +6,12 @@ link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='style
 
 polymer-element(name="mg-main" attributes="movies")
     template
-        core-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "9", "vote_count.gte": 10, "sort_by": "popularity.desc", "language": "en", "certification_country": "840"}', on-core-response="{{discover}}")
+        core-ajax(auto, url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax(auto, url="https://api.themoviedb.org/3/movie/{{movieId}}", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270"}', on-core-response="{{showMovie}}")
         link(rel="stylesheet" href="../../styles/layout/main.css")
         h1 ΠWEEK Movie Finder
         div(horizontal layout)
-            div.movie-container(horizontal layout wrap style="width: 80%")
+            div.movie-container(horizontal layout wrap style="width: 100%")
                 template(repeat="{{movie in movies}}")
                     mg-single-movie(id="{{movie.id}}" on-click="{{movieData}}")
                         figure
@@ -29,11 +29,11 @@ polymer-element(name="mg-main" attributes="movies")
             },
             movieData: function(event) {
                 this.movieId = event.currentTarget.id;
+                this.shadowRoot.querySelector('#lightbox').classList.toggle('closed');
+                this.shadowRoot.querySelector('#lightbox').classList.toggle('open');
             },
             showMovie: function(event, response) {
                 this.singleMovieData = response.response;
-                console.log(event);
-                //target.classList.toggle('open');
-                //target.classList.toggle('closed');
+                console.log(response);
             }
         });

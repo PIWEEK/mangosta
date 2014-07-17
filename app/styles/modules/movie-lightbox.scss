@@ -1,8 +1,37 @@
 :host {
-    position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background: rgba(#000, .8);
+    bottom: 0;
+    color: #FFF;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top:0;
+    .movie-lb-container {
+        margin: 3rem auto;
+        width: 960px;
+    }
+    .fa {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        cursor: pointer;
+        transition: color .3s linear;
+        &:hover {
+            color: #ffa500;
+        }
+    }
+    h1 {
+        color: #ffa500;
+        font-size: 1.6rem;
+        span {
+            font-size: 1rem;
+            color: rgba(#ffa500, .5);
+            display: block;
+        }
+    }
+    p {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+    }
 }
