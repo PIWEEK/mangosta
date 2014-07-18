@@ -5,15 +5,22 @@ link(rel="import", href="../../vendor/core-ajax/core-ajax.html")
 link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='stylesheet', type='text/css')
 link(href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah', rel='stylesheet', type='text/css')
 
-polymer-element(name="mg-main" attributes="movies genreId")
+polymer-element(name="mg-main" attributes="movies genreId genreName")
     template
-        core-ajax#genres-all(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "5", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
+        core-ajax#genres-all(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "8", "vote_count.gte": 50, "sort_by": "popularity.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax#genres-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "with_genres": "{{genreId}}", "vote_average.gte": "{{votes}}", "vote_count.gte": 20, "sort_by": "popularity.asc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax#votes-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "vote_average.gte": "{{votes}}", "vote_count.gte": 30, "sort_by": "vote_average.asc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax#year-ajax(url="https://api.themoviedb.org/3/discover/movie", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "release_date.gte": "{{year}}", "release_date.lte": "{{decade}}", "vote_average.gte": "7", "vote_count.gte": 20, "sort_by": "vote_average.desc", "language": "en"}', on-core-response="{{discover}}")
         core-ajax(auto, url="https://api.themoviedb.org/3/movie/{{movieId}}", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270"}', on-core-response="{{showMovie}}")
         link(rel="stylesheet" href="../../styles/layout/main.css")
         h1 Mangosta Movie Finder
+        h2
+            span A
+            a(href="http://www.polymer-project.org/", target="_blank")  Polymer Web components
+            span  experiment by
+            a(href="https://twitter.com/Xaviju", target="_blank")  @xaviju
+            span  for the
+            a(href="http://piweek.com", target="_blank")  ΠWEEK
 
         div
             div.filters.movie-container(horizontal layout self-start)
@@ -32,6 +39,8 @@ polymer-element(name="mg-main" attributes="movies genreId")
                         option(value="1990-01-01", data="2000-12-12") 1990
                         option(value="2000-01-01", data="2010-12-12") 2000
                         option(value="2010-01-01", data="2019-12-12", selected) 2010
+            template(if="{{ genreName }}")
+                h2.genre-name {{genreName}}
             div.movie-container(horizontal layout wrap style="width: 100%")
                 template(repeat="{{movie in movies}}")
                     mg-single-movie(id="{{movie.id}}" on-click="{{movieData}}")

@@ -2,7 +2,21 @@
     margin: 0 2rem;
     > h1 {
         color: #ffa500;
+        font-size: 2rem;
         font-family: 'Gloria Hallelujah', cursive;
+    }
+    > h2 {
+        color: #666;
+        font-size: 1.2rem;
+        font-family: 'Gloria Hallelujah', cursive;
+        a {
+            color: #999;
+            transition: color .3s linear;
+            text-decoration: none;
+            &:hover {
+                color: #ffa500;
+            }
+        }
     }
 }
 
@@ -79,6 +93,10 @@
 }
 
 :host::shadow  {
+    .genre-name {
+        color: #666;
+        font-size: 1.6rem;
+    }
     .filters {
         margin: 2rem 0;
         padding: 1rem 0;

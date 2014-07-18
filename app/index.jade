@@ -44,5 +44,6 @@ html(lang="en")
             window.addEventListener('genreSelected', function(e) {
                 var element = document.querySelector('mg-main');
                 element.genreId = e.detail.data;
+                element.genreName = e.detail.genreName;
                 element.genreSignal();
             });

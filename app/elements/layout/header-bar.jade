@@ -4,7 +4,7 @@ link(rel="import", href="../buttons/tab.html")
 
 polymer-element(name="mg-header-bar" unresolved)
     template
-        core-ajax(auto, url="https://api.themoviedb.org/3/genre/movie/list", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "language": "es"}', on-core-response="{{genresList}}")
+        core-ajax(auto, url="https://api.themoviedb.org/3/genre/movie/list", handleAs="json", params='{"api_key":"247e0e9d8f8cadd19b1cc9b925a68270", "language": "en"}', on-core-response="{{genresList}}")
         link(rel="stylesheet" href="../../styles/layout/header-bar.css")
         template(repeat="{{genre in genres}}")
             mg-tab(flex, genreId="{{genre.id}}" genreName="{{genre.name}}" on-click="{{genreSelect}}")
@@ -17,6 +17,7 @@ polymer-element(name="mg-header-bar" unresolved)
             genreSelect: function(event) {
                 target = event.currentTarget;
                 var genreIdSelected = target.genreId;
-                this.fire('genreSelected', {name: "genre", data: genreIdSelected});
+                var genreNameSelected = target.genreName;
+                this.fire('genreSelected', {name: "genre", data: genreIdSelected, genreName: genreNameSelected});
             }
         });
