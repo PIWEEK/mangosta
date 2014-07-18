@@ -1,0 +1,16 @@
+
+<link rel="import" href="../../vendor/polymer/polymer.html"/>
+<link rel="import" href="../buttons/hamburguer.html"/>
+<polymer-element name="mg-title-bar">
+  <template>
+    <link rel="stylesheet" href="../../styles/layout/title-bar.css"/>
+    <mg-hamburguer></mg-hamburguer>
+  </template>
+  <script>
+    Polymer('mg-title-bar', {
+        ready: function() {
+            console.log('mg-title-bar-ready');
+        }
+    });
+  </script>
+</polymer-element>

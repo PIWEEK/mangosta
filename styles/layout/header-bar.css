@@ -1,0 +1,34 @@
+:host {
+  background: #000;
+  display: block;
+  -webkit-transform: translate3d(-170px, 0, 0);
+  transform: translate3d(-170px, 0, 0);
+  width: 170px;
+  z-index: 99; }
+
+:host(.open) {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  transition: all .5s linear; }
+
+:host(.closed) {
+  -webkit-transform: translate3d(-170px, 0, 0);
+  transform: translate3d(-170px, 0, 0);
+  transition: all .1s linear; }
+
+:host::shadow mg-tab {
+  background: #000;
+  border-bottom: 1px solid #000;
+  display: block;
+  transition: background .5s linear; }
+  :host::shadow mg-tab:hover {
+    background: #333; }
+    :host::shadow mg-tab:hover span,
+    :host::shadow mg-tab:hover div {
+      color: #ffa500; }
+  :host::shadow mg-tab span,
+  :host::shadow mg-tab div {
+    color: #666;
+    display: block;
+    text-align: center;
+    transition: color .5s linear; }

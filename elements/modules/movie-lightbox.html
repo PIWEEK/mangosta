@@ -1,0 +1,30 @@
+
+<link rel="import" href="../../vendor/polymer/polymer.html"/>
+<polymer-element name="mg-movie-lb" attributes="movieDeep">
+  <template>
+    <link rel="stylesheet" href="../../styles/modules/movie-lightbox.css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <div horizontal="horizontal" layout="layout" class="movie-lb-container">
+      <div flex="flex" class="movie-data">
+        <h1>{{movieDeep.title}}<span>{{movieDeep.original_title}}</span></h1>
+        <p>{{movieDeep.overview}}</p>
+        <ul>
+          <li>Vote Count <strong>{{movieDeep.vote_count}}</strong></li>
+          <li>Average vote <strong>{{movieDeep.vote_average}}</strong></li>
+        </ul>
+      </div>
+      <figure flex="flex"><img src="https://image.tmdb.org/t/p/w500/{{movieDeep.poster_path}}" alt="{{movieDeep.title}}" unresolved="unresolved"/></figure><i on-click="{{toggle}}" class="fa fa-times fa-2x"></i>
+    </div>
+  </template>
+  <script>
+    Polymer('mg-movie-lb', {
+        ready: function() {
+            console.log('mg-movie-lb-ready');
+        },
+        toggle: function(event) {
+            this.classList.toggle('closed');
+            this.classList.toggle('open');
+        }
+    });
+  </script>
+</polymer-element>

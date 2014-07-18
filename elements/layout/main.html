@@ -1,0 +1,97 @@
+
+<link rel="import" href="../../vendor/polymer/polymer.html"/>
+<link rel="import" href="../modules/single-movie.html"/>
+<link rel="import" href="../modules/movie-lightbox.html"/>
+<link rel="import" href="../../vendor/core-ajax/core-ajax.html"/>
+<link href="http://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet" type="text/css"/>
+<link href="http://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet" type="text/css"/>
+<polymer-element name="mg-main" attributes="movies genreId genreName">
+  <template>
+    <core-ajax id="genres-all" url="https://api.themoviedb.org/3/discover/movie" handleAs="json" params="{&quot;api_key&quot;:&quot;247e0e9d8f8cadd19b1cc9b925a68270&quot;, &quot;vote_average.gte&quot;: &quot;8&quot;, &quot;vote_count.gte&quot;: 50, &quot;sort_by&quot;: &quot;popularity.desc&quot;, &quot;language&quot;: &quot;en&quot;}" on-core-response="{{discover}}"></core-ajax>
+    <core-ajax id="genres-ajax" url="https://api.themoviedb.org/3/discover/movie" handleAs="json" params="{&quot;api_key&quot;:&quot;247e0e9d8f8cadd19b1cc9b925a68270&quot;, &quot;with_genres&quot;: &quot;{{genreId}}&quot;, &quot;vote_average.gte&quot;: &quot;{{votes}}&quot;, &quot;vote_count.gte&quot;: 20, &quot;sort_by&quot;: &quot;popularity.asc&quot;, &quot;language&quot;: &quot;en&quot;}" on-core-response="{{discover}}"></core-ajax>
+    <core-ajax id="votes-ajax" url="https://api.themoviedb.org/3/discover/movie" handleAs="json" params="{&quot;api_key&quot;:&quot;247e0e9d8f8cadd19b1cc9b925a68270&quot;, &quot;vote_average.gte&quot;: &quot;{{votes}}&quot;, &quot;vote_count.gte&quot;: 30, &quot;sort_by&quot;: &quot;vote_average.asc&quot;, &quot;language&quot;: &quot;en&quot;}" on-core-response="{{discover}}"></core-ajax>
+    <core-ajax id="year-ajax" url="https://api.themoviedb.org/3/discover/movie" handleAs="json" params="{&quot;api_key&quot;:&quot;247e0e9d8f8cadd19b1cc9b925a68270&quot;, &quot;release_date.gte&quot;: &quot;{{year}}&quot;, &quot;release_date.lte&quot;: &quot;{{decade}}&quot;, &quot;vote_average.gte&quot;: &quot;7&quot;, &quot;vote_count.gte&quot;: 20, &quot;sort_by&quot;: &quot;vote_average.desc&quot;, &quot;language&quot;: &quot;en&quot;}" on-core-response="{{discover}}"></core-ajax>
+    <core-ajax auto="auto" url="https://api.themoviedb.org/3/movie/{{movieId}}" handleAs="json" params="{&quot;api_key&quot;:&quot;247e0e9d8f8cadd19b1cc9b925a68270&quot;}" on-core-response="{{showMovie}}"></core-ajax>
+    <link rel="stylesheet" href="../../styles/layout/main.css"/>
+    <h1>Mangosta Movie Finder</h1>
+    <h2><span>A</span><a href="http://www.polymer-project.org/" target="_blank"> Polymer Web components</a><span> experiment by</span><a href="https://twitter.com/Xaviju" target="_blank"> @xaviju</a><span> for the</span><a href="http://piweek.com" target="_blank"> ΠWEEK</a></h2>
+    <div>
+      <div horizontal="horizontal" layout="layout" self-start="self-start" class="filters movie-container">
+        <fieldset>
+          <label>Votes</label>
+          <input type="range" name="points" value="8" min="1" max="10" on-change="{{changeVotes}}"/>
+        </fieldset>
+        <fieldset>
+          <select id="year-selector" name="points" on-change="{{changeYear}}">
+            <option value="1900-01-01" data="1930-12-12">1900</option>
+            <option value="1930-01-01" data="1940-12-12">1930</option>
+            <option value="1940-01-01" data="1950-12-12">1940</option>
+            <option value="1950-01-01" data="1960-12-12">1950</option>
+            <option value="1960-01-01" data="1970-12-12">1960</option>
+            <option value="1970-01-01" data="1980-12-12">1970</option>
+            <option value="1980-01-01" data="1990-12-12">1980</option>
+            <option value="1990-01-01" data="2000-12-12">1990</option>
+            <option value="2000-01-01" data="2010-12-12">2000</option>
+            <option value="2010-01-01" data="2019-12-12" selected="selected">2010</option>
+          </select>
+        </fieldset>
+      </div>
+      <template if="{{ genreName }}">
+        <h2 class="genre-name">{{genreName}}</h2>
+      </template>
+      <div horizontal="horizontal" layout="layout" wrap="wrap" style="width: 100%" class="movie-container">
+        <template repeat="{{movie in movies}}">
+          <mg-single-movie id="{{movie.id}}" on-click="{{movieData}}">
+            <figure><img src="https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}" alt="{{movie.title}}"/></figure>
+            <div class="single-movie-container">
+              <h1>{{movie.title}}</h1>
+              <h2>{{movie.original_title}}</h2>
+            </div>
+            <div class="vote-avg">{{movie.vote_average}}</div>
+          </mg-single-movie>
+        </template>
+      </div>
+    </div>
+    <mg-movie-lb id="lightbox" movieDeep="{{singleMovieData}}" class="closed"></mg-movie-lb>
+  </template>
+  <script>
+    Polymer({
+        ready: function() {
+            var ajax = this.shadowRoot.getElementById('genres-all');
+            ajax.go();
+        },
+        discover: function(event, response) {
+            if(response.response.results.length > 0){
+                this.movies = response.response.results;
+            }else{
+                alert('No hay películas con este filtrado');
+            }
+        },
+        movieData: function(event) {
+            this.movieId = event.currentTarget.id;
+            this.shadowRoot.querySelector('#lightbox').classList.toggle('closed');
+            this.shadowRoot.querySelector('#lightbox').classList.toggle('open');
+        },
+        showMovie: function(event, response) {
+            this.singleMovieData = response.response;
+        },
+        genreSignal: function() {
+            var ajax = this.shadowRoot.getElementById('genres-ajax');
+            ajax.go();
+        },
+        changeVotes: function(event) {
+            this.votes = event.currentTarget.value;
+            console.log(this.votes);
+            var ajax = this.shadowRoot.getElementById('votes-ajax');
+            ajax.go();
+        },
+        changeYear: function(event) {
+            this.year = event.currentTarget.value;
+            var selected = this.shadowRoot.getElementById("year-selector");
+            this.decade = selected.options[selected.selectedIndex].getAttribute('data');
+            var ajax = this.shadowRoot.getElementById('year-ajax');
+            ajax.go();
+        }
+    });
+  </script>
+</polymer-element>
